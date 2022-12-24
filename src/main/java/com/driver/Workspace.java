@@ -31,22 +31,22 @@ public class Workspace extends Gmail{
         //Combine all in a list...
         int maxMeetings=0,count;
         for(int i=0;i<calendar.size();i++){
-            count=0;
+            count=1;
             for(int j=0;j<calendar.size();j++){
                 if(i!=j){
-                    int v=calendar.get(j).getStartTime().compareTo(calendar.get(i).getStartTime());
+                    int v=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
                     if(v>0){
-                        int k=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
+                        int k=calendar.get(j).getEndTime().compareTo(calendar.get(i).getEndTime());
                         if(k>0) count++;
                     }
-                    else if(v<0) continue;
-                    else{
-                        int k=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
-                        if(k>0) count++;
-                    }
+//                    else if(v<0) continue;
+//                    else{
+//                        int k=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
+//                        if(k>0) count++;
+//                    }
                 }
             }
-            if(count==0) maxMeetings=Math.max(maxMeetings,1);
+            maxMeetings=Math.max(maxMeetings,count);
         }
         return maxMeetings;
     }
