@@ -18,7 +18,6 @@ public class Workspace extends Gmail{
 
     public void addMeeting(Meeting meeting){
         //add the meeting to calendar
-        if(!calendar.contains(meeting))
         calendar.add(meeting);
     }
 
