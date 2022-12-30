@@ -69,11 +69,9 @@ public class Gmail extends Email {
       int count=0;
 
       for(Mail m : inbox){
-          if(m.getDate().getDate()>=start.getDate() && m.getDate().getDate()<=end.getDate()){
-              if(m.getDate().getMonth()>= start.getMonth() && m.getDate().getMonth()<=end.getMonth()){
-                  if(m.getDate().getYear()>=start.getYear() && m.getDate().getYear()<=end.getYear()) count++;
-              }
-          }
+          if(m.getDate().after(end)) return count;
+          else if(m.getDate().before(start)) continue;
+          else count++;
       }
       return count;
     }
