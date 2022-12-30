@@ -32,26 +32,44 @@ public class Workspace extends Gmail{
         // Example: If a meeting ends at 10:00 am, you cannot attend another meeting starting at 10:00 am
         //17:40
         //Combine all in a list...
-        int maxMeetings=0,count;
-        for(int i=0;i<calendar.size();i++){
-            count=1;
-            for(int j=0;j<calendar.size();j++){
-                if(i!=j){
-                    int v=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
-                    if(v>0){
-//                        int k=calendar.get(j).getEndTime().compareTo(calendar.get(i).getEndTime());
-//                        if(k>0)
-                        count++;
-                    }
-//                    else if(v<0) continue;
-//                    else{
-//                        int k=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
-//                        if(k>0) count++;
-//                    }
-                }
-            }
-            maxMeetings=Math.max(maxMeetings,count);
+        int maxMeetings=0;
+        LocalTime endTime;
+
+        Collections.sort(calendar,(a,b)->{
+           return a.getEndTime().compareTo(b.getEndTime());
+        });
+
+        if(calendar.size()>0){
+            maxMeetings++;
+            endTime=calendar.get(0).getEndTime();
         }
+        else return maxMeetings;
+
+        for(int i=1;i<calendar.size();i++){
+            if(calendar.get(i).getStartTime().compareTo(endTime)>0){
+                maxMeetings++;
+                endTime=calendar.get(i).getEndTime();
+            }
+        }
+//        for(int i=0;i<calendar.size();i++){
+//            count=1;
+//            for(int j=0;j<calendar.size();j++){
+//                if(i!=j){
+//                    int v=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
+//                    if(v>0){
+////                        int k=calendar.get(j).getEndTime().compareTo(calendar.get(i).getEndTime());
+////                        if(k>0)
+//                        count++;
+//                    }
+////                    else if(v<0) continue;
+////                    else{
+////                        int k=calendar.get(j).getStartTime().compareTo(calendar.get(i).getEndTime());
+////                        if(k>0) count++;
+////                    }
+//                }
+            //}
+            //maxMeetings=Math.max(maxMeetings,count);
+
         return maxMeetings;
     }
 }
